@@ -5,10 +5,12 @@ import hello.hello_spring2.repository.MemberRepository;
 import hello.hello_spring2.repository.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Transactional // 데이터를 저장하거나 변경할 때 transaction 필요. (JPA)
 public class MemberService {
 
     private final MemberRepository memberRepository;
@@ -18,9 +20,9 @@ public class MemberService {
     }
 
     public Long join(Member member) { // 회원가입
-        // 같은 이름 중복 회원X
-        validateDuplicateMember(member);
 
+            // 같은 이름 중복 회원X
+        validateDuplicateMember(member);
         memberRepository.save(member);
 
         return member.getId();
